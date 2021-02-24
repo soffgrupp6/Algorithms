@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: "com.github.sherter.google-java-format"
 apply plugin: 'application'
+apply plugin: 'jacoco'
 
 mainClassName = findProperty("main") ?: "com.williamfiset.algorithms.${findProperty("algorithm") ?: 'missingPackage.missingClass'}"
 
@@ -36,7 +37,7 @@ dependencies {
 
   // JUnit 5 / Jupiter
   testImplementation('org.junit.jupiter:junit-jupiter-api:5.4.2')
-   
+
   // Google Guava lib
   testCompile group: 'com.google.guava', name: 'guava', version: '22.0'
 
@@ -51,6 +52,7 @@ dependencies {
 test {
   dependsOn cleanTest
   testLogging.showStandardStreams = true
+  finalizedBy jacocoTestReport // report is always generated after tests run
 }
 
 tasks.withType(JavaCompile) {
@@ -69,6 +71,11 @@ compileTestJava {
     '-Xlint:deprecation'
   ]
 }
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}
+
 
 task buildDependenciesFolder(type: Copy) {
   from configurations.compile
