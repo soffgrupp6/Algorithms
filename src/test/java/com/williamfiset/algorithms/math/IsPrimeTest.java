@@ -14,7 +14,7 @@ public class IsPrimeTest {
     public void test1() {
         assertThat(true).isTrue();
     }
-    
+
     @Test
     public void testForMultiplePrimes() {
         int[] primes = {7, 3, 5, 11, 19};
