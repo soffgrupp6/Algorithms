@@ -194,6 +194,18 @@ public class TravelingSalesmanProblemTest {
     }
   }
 
+  @Test
+  public void testRunningTwiceToCheckRunSolverIsTrue() {
+    double[][] dist = new double[5][5];
+    randomFillDistMatrix(dist);
+    TspDynamicProgrammingIterative solver = new TspDynamicProgrammingIterative(dist);
+
+    solver.solve();
+    solver.solve();
+
+    assertThat(solver.ranSolver).isTrue();
+  }
+
   @After
   public void after() {
     int trues = 0;

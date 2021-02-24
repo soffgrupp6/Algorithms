@@ -19,7 +19,7 @@ public class TspDynamicProgrammingIterative {
   private final double[][] distance;
   private List<Integer> tour = new ArrayList<>();
   private double minTourCost = Double.POSITIVE_INFINITY;
-  private boolean ranSolver = false;
+  public boolean ranSolver = false;
   public static boolean[] array = new boolean[18];
 
   static {
