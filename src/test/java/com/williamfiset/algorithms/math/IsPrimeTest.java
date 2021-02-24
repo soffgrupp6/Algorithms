@@ -32,6 +32,14 @@ public class IsPrimeTest {
     }
 
     @Test
+    public void testForBigNumbers() {
+        int[] primes = {123123423, 234232, 634626, 8723432, 74826, 1234567, 73458934};
+
+        for(int i = 0; i < primes.length; i++)
+            assertThat(IsPrime.isPrime(primes[i])).isFalse();
+    }
+
+    @Test
     public void testForNumbersLessThan2() {
         int[] primes = {1, 0};
 
