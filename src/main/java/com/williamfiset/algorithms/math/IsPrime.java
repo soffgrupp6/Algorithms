@@ -5,17 +5,27 @@
  */
 package com.williamfiset.algorithms.math;
 
+import java.util.Arrays;
+
 public class IsPrime {
 
+  public static boolean[] array = new boolean[5];
+
+  static {
+    Arrays.fill(array, Boolean.FALSE);
+  }
+
   public static boolean isPrime(final long n) {
-    if (n < 2) return false;
-    if (n == 2 || n == 3) return true;
-    if (n % 2 == 0 || n % 3 == 0) return false;
+    if (n < 2) {array[0] = true; return false;}
+    if (n == 2 || n == 3) {array[1] = true; return true;}
+    if (n % 2 == 0 || n % 3 == 0) {array[2] = true; return false;}
 
     long limit = (long) Math.sqrt(n);
 
     for (long i = 5; i <= limit; i += 6) {
+      array[3] = true;
       if (n % i == 0 || n % (i + 2) == 0) {
+        array[4] = true;
         return false;
       }
     }

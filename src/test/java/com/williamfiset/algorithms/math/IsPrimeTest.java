@@ -11,6 +11,11 @@ import org.junit.*;
 public class IsPrimeTest {
 
     @Test
+    public void test1() {
+        assertThat(true).isTrue();
+    }
+    
+    @Test
     public void testForMultiplePrimes() {
         int[] primes = {7, 3, 5, 11, 19};
 
@@ -41,4 +46,17 @@ public class IsPrimeTest {
         for(int i = 0; i < primes.length; i++)
             assertThat(IsPrime.isPrime(primes[i])).isFalse();
     }
+
+    @After
+    public void after() {
+        int trues = 0;
+
+        for(boolean elem : IsPrime.array) {
+            System.out.println(elem);
+            if(elem == true) trues++;
+        }
+
+        System.out.println((float) ((float)trues / IsPrime.array.length));
+    }
+
 }
