@@ -8,6 +8,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.williamfiset.algorithms.utils.TestUtils;
 import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 
 public class GenericSegmentTree2Test {
@@ -452,6 +453,51 @@ public class GenericSegmentTree2Test {
     }
   }
 
+  //Tests that exception is thrown when values = null
+  @Test(expected = IllegalArgumentException.class)
+  public void testNullValues() {
+    long[] values = null;
+    GenericSegmentTree2 st =
+        new GenericSegmentTree2(
+            values,
+            GenericSegmentTree2.SegmentCombinationFn.SUM,
+            GenericSegmentTree2.RangeUpdateFn.ADDITION);
+  }
+
+  //Tests that exception is thrown when SegmentCombinationFn = null
+  @Test(expected = IllegalArgumentException.class)
+  public void testNullSegmentCombinationFn() {
+    long[] values = {2, 1, 3, 4, -1};
+    GenericSegmentTree2 st =
+        new GenericSegmentTree2(
+            values,
+            null,
+            GenericSegmentTree2.RangeUpdateFn.ADDITION);
+  }
+
+  //Tests that exception is thrown when RangeUpdateFunction = null
+  @Test(expected = IllegalArgumentException.class)
+  public void testNullRangeUpdateFunction() {
+    long[] values = {2, 1, 3, 4, -1};
+    GenericSegmentTree2 st =
+        new GenericSegmentTree2(
+            values,
+            GenericSegmentTree2.SegmentCombinationFn.SUM,
+            null);
+  }
+
+  @After
+  public void after() {
+    int trues = 0;
+
+    for(boolean elem : GenericSegmentTree2.array) {
+      System.out.println(elem);
+      if(elem == true) trues++;
+    }
+
+    System.out.println((float) ((float)trues / GenericSegmentTree2.array.length));
+  }
+
   // Finds the sum in an array between [l, r] in the `values` array
   private static long bruteForceSum(long[] values, int l, int r) {
     long s = 0;
@@ -496,4 +542,6 @@ public class GenericSegmentTree2Test {
       values[i] = x;
     }
   }
+
+
 }
