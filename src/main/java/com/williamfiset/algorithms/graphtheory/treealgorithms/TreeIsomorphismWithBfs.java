@@ -18,6 +18,12 @@ import java.util.*;
 
 public class TreeIsomorphismWithBfs {
 
+  public static boolean[] array = new boolean[17];
+
+  static {
+    Arrays.fill(array, Boolean.FALSE);
+  }
+
   public static List<List<Integer>> createEmptyTree(int n) {
     List<List<Integer>> tree = new ArrayList<>(n);
     for (int i = 0; i < n; i++) tree.add(new ArrayList<>());
@@ -61,8 +67,8 @@ public class TreeIsomorphismWithBfs {
   // also has the same encoding.
   // TODO(william): make this method private and test only with the treesAreIsomorphic method
   public static String encodeTree(List<List<Integer>> tree) {
-    if (tree == null || tree.size() == 0) return "";
-    if (tree.size() == 1) return "()";
+    if (tree == null || tree.size() == 0) {array[0] = true; return "";}
+    if (tree.size() == 1) {array[1] = true; return "()";}
     final int n = tree.size();
 
     int root = findTreeCenters(tree).get(0);
@@ -79,47 +85,59 @@ public class TreeIsomorphismWithBfs {
 
     // Do a BFS to find all the leaf nodes
     while (!q.isEmpty()) {
+      array[2] = true;
       int at = q.poll();
       List<Integer> edges = tree.get(at);
       degree[at] = edges.size();
       for (int next : edges) {
+        array[3] = true;
         if (!visited[next]) {
+          array[4] = true;
           visited[next] = true;
           parent[next] = at;
           q.offer(next);
         }
       }
-      if (degree[at] == 1) leafs.add(at);
+      if (degree[at] == 1) {array[5] = true; leafs.add(at);}
     }
 
     List<Integer> newLeafs = new ArrayList<>();
     String[] map = new String[n];
     for (int i = 0; i < n; i++) {
+      array[6] = true;
       visited[i] = false;
       map[i] = "()";
     }
 
     int treeSize = n;
     while (treeSize > 2) {
+      array[7] = true;
       for (int leaf : leafs) {
+        array[8] = true;
 
         // Find parent of leaf node and check if the parent
         // is a candidate for the next cycle of leaf nodes
         visited[leaf] = true;
         int p = parent[leaf];
-        if (--degree[p] == 1) newLeafs.add(p);
+        if (--degree[p] == 1) {array[9] = true; newLeafs.add(p);};
 
         treeSize--;
       }
 
       // Update parent labels
       for (int p : newLeafs) {
+        array[10] = true;
 
         List<String> labels = new ArrayList<>();
-        for (int child : tree.get(p))
+        for (int child : tree.get(p)){
+          array[11] = true;
           // Recall edges are bidirectional so we don't want to
           // access the parent's parent here.
-          if (visited[child]) labels.add(map[child]);
+          if (visited[child]) {
+            array[12] = true;
+            labels.add(map[child]);
+          }
+        }
 
         String parentInnerParentheses = map[p].substring(1, map[p].length() - 1);
         labels.add(parentInnerParentheses);
@@ -135,10 +153,11 @@ public class TreeIsomorphismWithBfs {
 
     // Only one node remains and it holds the canonical form
     String l1 = map[leafs.get(0)];
-    if (treeSize == 1) return l1;
+    if (treeSize == 1) {array[13] = true; return l1;}
 
     // Two nodes remain and we need to combine their labels
     String l2 = map[leafs.get(1)];
+    array[14] = true;
     return ((l1.compareTo(l2) < 0) ? (l1 + l2) : (l2 + l1));
   }
 

@@ -9,6 +9,7 @@ import static com.google.common.truth.Truth.assertThat;
 import com.williamfiset.algorithms.utils.TestUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.After;
 
 public class GenericSegmentTree2Test {
 
@@ -451,6 +452,15 @@ public class GenericSegmentTree2Test {
       }
     }
   }
+
+  @After
+  public void after() {
+    int trues = 0;
+
+    for(boolean elem : GenericSegmentTree2.array) {
+      System.out.println(elem);
+      if(elem == true) trues++;
+    }
 
   // Finds the sum in an array between [l, r] in the `values` array
   private static long bruteForceSum(long[] values, int l, int r) {

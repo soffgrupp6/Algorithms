@@ -173,4 +173,16 @@ public class TreeIsomorphismWithBfsTest {
     //             ((())())
     //
   }
+
+  @After
+  public void after() {
+    int trues = 0;
+
+    for(boolean elem : TreeIsomorphismWithBfs.array) {
+      System.out.println(elem);
+      if(elem == true) trues++;
+    }
+
+    System.out.println((float) ((float)trues / TreeIsomorphismWithBfs.array.length));
+  }
 }
