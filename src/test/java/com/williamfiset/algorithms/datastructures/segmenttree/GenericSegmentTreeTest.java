@@ -7,7 +7,7 @@ package com.williamfiset.algorithms.datastructures.segmenttree;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.williamfiset.algorithms.utils.TestUtils;
-import org.junit.Test;
+import org.junit.*;
 
 public class GenericSegmentTreeTest {
 
@@ -408,5 +408,20 @@ public class GenericSegmentTreeTest {
     for (int i = l; i <= r; i++) {
       values[i] = x;
     }
+  }
+
+
+// ------------------------------------------------MY TESTS BEGIN HERE----------------------------------------------------
+
+  @After
+  public void after() {
+    int trues = 0;
+
+    for(boolean elem : GenericSegmentTree.array) {
+      System.out.println(elem);
+      if(elem == true) trues++;
+    }
+
+    System.out.println((float) ((float)trues / GenericSegmentTree.array.length));
   }
 }
