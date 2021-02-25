@@ -413,6 +413,46 @@ public class GenericSegmentTreeTest {
 
 // ------------------------------------------------MY TESTS BEGIN HERE----------------------------------------------------
 
+  @Test
+  public void testSegMinRangMul() {
+    long[] values = {0,5,3,0,1};
+    GenericSegmentTree st = new GenericSegmentTree(
+      values, 
+      GenericSegmentTree.SegmentCombinationFn.MIN, 
+      GenericSegmentTree.RangeUpdateFn.MULTIPLICATION);
+    assertThat(st.rangeQuery1(0, 4) == 0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testNoRangeFunction() {
+    long[] values = {1,1,1,1};
+    GenericSegmentTree st = new GenericSegmentTree(
+      values,
+      GenericSegmentTree.SegmentCombinationFn.SUM, 
+      null);
+  }
+
+  @Test
+  public void testSegProRangAdd() {
+    long[] values = {0,5,3,0,1};
+    GenericSegmentTree st = new GenericSegmentTree(
+      values, 
+      GenericSegmentTree.SegmentCombinationFn.PRODUCT, 
+      GenericSegmentTree.RangeUpdateFn.ADDITION);
+    assertThat(st.rangeQuery1(0, 4) == 8);
+  }
+
+  @Test
+  public void testSegProRangMul() {
+    long[] values = {1,5,3,2,1};
+    GenericSegmentTree st = new GenericSegmentTree(
+      values, 
+      GenericSegmentTree.SegmentCombinationFn.PRODUCT, 
+      GenericSegmentTree.RangeUpdateFn.MULTIPLICATION);
+    assertThat(st.rangeQuery1(0, 4) == 30);
+  }
+
+
   @After
   public void after() {
     int trues = 0;
