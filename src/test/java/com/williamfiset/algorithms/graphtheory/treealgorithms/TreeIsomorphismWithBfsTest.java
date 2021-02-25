@@ -127,6 +127,15 @@ public class TreeIsomorphismWithBfsTest {
   }
 
   @Test
+  public void testNullTree() {
+    // Test that empty tree returns ""
+    List<List<Integer>> tree = null;
+    String treeEncoding = encodeTree(tree);
+    String expectedEncoding = "";
+    assertThat(treeEncoding).isEqualTo(expectedEncoding);
+  }
+
+  @Test
   public void t() {
     List<List<Integer>> tree = createEmptyTree(10);
 
@@ -172,5 +181,17 @@ public class TreeIsomorphismWithBfsTest {
     //
     //             ((())())
     //
+  }
+
+  @After
+  public void after() {
+    int trues = 0;
+
+    for(boolean elem : TreeIsomorphismWithBfs.array) {
+      System.out.println(elem);
+      if(elem == true) trues++;
+    }
+
+    System.out.println((float) ((float)trues / TreeIsomorphismWithBfs.array.length));
   }
 }
