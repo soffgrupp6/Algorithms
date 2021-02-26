@@ -162,6 +162,74 @@ public class GenericSegmentTree {
   private Ruf productQueryAssignUpdate = (b, tl, tr, d) -> d;
   private Ruf lproductQueryAssignUpdate = (b, tl, tr, d) -> d;
 
+  private void SetCombinationFnAndRuf(SegmentCombinationFn scfn, RangeUpdateFn rufn) {
+        // Select the specified combination function
+        if (scfn == SegmentCombinationFn.SUM) {
+          combinationFn = sumCombinationFn;
+          if (rufn == RangeUpdateFn.ADDITION) {
+            ruf = sumQuerySumUpdate;
+            lruf = lsumQuerySumUpdate;
+          } else if (rufn == RangeUpdateFn.ASSIGN) {
+            ruf = sumQueryAssignUpdate;
+            lruf = lsumQueryAssignUpdate;
+          } else if (rufn == RangeUpdateFn.MULTIPLICATION) {
+            ruf = sumQueryMulUpdate;
+            lruf = lsumQueryMulUpdate;
+          }
+        } else if (scfn == SegmentCombinationFn.MIN) {
+          combinationFn = minCombinationFn;
+          if (rufn == RangeUpdateFn.ADDITION) {
+            ruf = minQuerySumUpdate;
+            lruf = lminQuerySumUpdate;
+          } else if (rufn == RangeUpdateFn.ASSIGN) {
+            ruf = minQueryAssignUpdate;
+            lruf = lminQueryAssignUpdate;
+          } else if (rufn == RangeUpdateFn.MULTIPLICATION) {
+            ruf = minQueryMulUpdate;
+            lruf = lminQueryMulUpdate;
+          }
+        } else if (scfn == SegmentCombinationFn.MAX) {
+          combinationFn = maxCombinationFn;
+          if (rufn == RangeUpdateFn.ADDITION) {
+            ruf = maxQuerySumUpdate;
+            lruf = lmaxQuerySumUpdate;
+          } else if (rufn == RangeUpdateFn.ASSIGN) {
+            ruf = maxQueryAssignUpdate;
+            lruf = lmaxQueryAssignUpdate;
+          } else if (rufn == RangeUpdateFn.MULTIPLICATION) {
+            ruf = maxQueryMulUpdate;
+            lruf = lmaxQueryMulUpdate;
+          }
+        } else if (scfn == SegmentCombinationFn.GCD) {
+          combinationFn = gcdCombinationFn;
+          if (rufn == RangeUpdateFn.ADDITION) {
+            ruf = gcdQuerySumUpdate;
+            lruf = lgcdQuerySumUpdate;
+          } else if (rufn == RangeUpdateFn.ASSIGN) {
+            ruf = gcdQueryAssignUpdate;
+            lruf = lgcdQueryAssignUpdate;
+          } else if (rufn == RangeUpdateFn.MULTIPLICATION) {
+            ruf = gcdQueryMulUpdate;
+            lruf = lgcdQueryMulUpdate;
+          }
+        } else if (scfn == SegmentCombinationFn.PRODUCT) {
+          combinationFn = productCombinationFn;
+          if (rufn == RangeUpdateFn.ADDITION) {
+            ruf = productQuerySumUpdate;
+            lruf = lproductQuerySumUpdate;
+          } else if (rufn == RangeUpdateFn.ASSIGN) {
+            ruf = productQueryAssignUpdate;
+            lruf = lproductQueryAssignUpdate;
+          } else if (rufn == RangeUpdateFn.MULTIPLICATION) {
+            ruf = productQueryMulUpdate;
+            lruf = lproductQueryMulUpdate;
+          }
+        } else {
+          throw new UnsupportedOperationException(
+              "Combination function not supported: " + scfn);
+        }
+  }
+
   public GenericSegmentTree(
       long[] values,
       SegmentCombinationFn segmentCombinationFunction,
@@ -187,71 +255,7 @@ public class GenericSegmentTree {
     t = new Long[N];
     lazy = new Long[N];
 
-    // Select the specified combination function
-    if (segmentCombinationFunction == SegmentCombinationFn.SUM) {
-      combinationFn = sumCombinationFn;
-      if (rangeUpdateFunction == RangeUpdateFn.ADDITION) {
-        ruf = sumQuerySumUpdate;
-        lruf = lsumQuerySumUpdate;
-      } else if (rangeUpdateFunction == RangeUpdateFn.ASSIGN) {
-        ruf = sumQueryAssignUpdate;
-        lruf = lsumQueryAssignUpdate;
-      } else if (rangeUpdateFunction == RangeUpdateFn.MULTIPLICATION) {
-        ruf = sumQueryMulUpdate;
-        lruf = lsumQueryMulUpdate;
-      }
-    } else if (segmentCombinationFunction == SegmentCombinationFn.MIN) {
-      combinationFn = minCombinationFn;
-      if (rangeUpdateFunction == RangeUpdateFn.ADDITION) {
-        ruf = minQuerySumUpdate;
-        lruf = lminQuerySumUpdate;
-      } else if (rangeUpdateFunction == RangeUpdateFn.ASSIGN) {
-        ruf = minQueryAssignUpdate;
-        lruf = lminQueryAssignUpdate;
-      } else if (rangeUpdateFunction == RangeUpdateFn.MULTIPLICATION) {
-        ruf = minQueryMulUpdate;
-        lruf = lminQueryMulUpdate;
-      }
-    } else if (segmentCombinationFunction == SegmentCombinationFn.MAX) {
-      combinationFn = maxCombinationFn;
-      if (rangeUpdateFunction == RangeUpdateFn.ADDITION) {
-        ruf = maxQuerySumUpdate;
-        lruf = lmaxQuerySumUpdate;
-      } else if (rangeUpdateFunction == RangeUpdateFn.ASSIGN) {
-        ruf = maxQueryAssignUpdate;
-        lruf = lmaxQueryAssignUpdate;
-      } else if (rangeUpdateFunction == RangeUpdateFn.MULTIPLICATION) {
-        ruf = maxQueryMulUpdate;
-        lruf = lmaxQueryMulUpdate;
-      }
-    } else if (segmentCombinationFunction == SegmentCombinationFn.GCD) {
-      combinationFn = gcdCombinationFn;
-      if (rangeUpdateFunction == RangeUpdateFn.ADDITION) {
-        ruf = gcdQuerySumUpdate;
-        lruf = lgcdQuerySumUpdate;
-      } else if (rangeUpdateFunction == RangeUpdateFn.ASSIGN) {
-        ruf = gcdQueryAssignUpdate;
-        lruf = lgcdQueryAssignUpdate;
-      } else if (rangeUpdateFunction == RangeUpdateFn.MULTIPLICATION) {
-        ruf = gcdQueryMulUpdate;
-        lruf = lgcdQueryMulUpdate;
-      }
-    } else if (segmentCombinationFunction == SegmentCombinationFn.PRODUCT) {
-      combinationFn = productCombinationFn;
-      if (rangeUpdateFunction == RangeUpdateFn.ADDITION) {
-        ruf = productQuerySumUpdate;
-        lruf = lproductQuerySumUpdate;
-      } else if (rangeUpdateFunction == RangeUpdateFn.ASSIGN) {
-        ruf = productQueryAssignUpdate;
-        lruf = lproductQueryAssignUpdate;
-      } else if (rangeUpdateFunction == RangeUpdateFn.MULTIPLICATION) {
-        ruf = productQueryMulUpdate;
-        lruf = lproductQueryMulUpdate;
-      }
-    } else {
-      throw new UnsupportedOperationException(
-          "Combination function not supported: " + segmentCombinationFunction);
-    }
+    SetCombinationFnAndRuf(segmentCombinationFunction, rangeUpdateFunction);
 
     buildSegmentTree(0, 0, n - 1, values);
   }
