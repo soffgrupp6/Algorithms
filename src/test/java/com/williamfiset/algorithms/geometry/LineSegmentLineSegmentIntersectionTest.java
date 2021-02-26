@@ -5,6 +5,7 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.common.collect.ImmutableList;
 import java.awt.geom.*;
 import org.junit.*;
+import com.williamfiset.algorithms.geometry.LineSegmentLineSegmentIntersection.Pt;
 
 public class LineSegmentLineSegmentIntersectionTest {
 
@@ -15,41 +16,46 @@ public class LineSegmentLineSegmentIntersectionTest {
 
   @Test
   public void testSegment2enclosedInSegment1() {
-    LineSegmentLineSegmentIntersection.Pt p1 = new LineSegmentLineSegmentIntersection.Pt(0,2);
-    LineSegmentLineSegmentIntersection.Pt p2 = new LineSegmentLineSegmentIntersection.Pt(0,6);
-    LineSegmentLineSegmentIntersection.Pt p3 = new LineSegmentLineSegmentIntersection.Pt(0,0);
-    LineSegmentLineSegmentIntersection.Pt p4 = new LineSegmentLineSegmentIntersection.Pt(0,9);
+    Pt p1 = new Pt(0,2);
+    Pt p2 = new Pt(0,6);
+    Pt p3 = new Pt(0,0);
+    Pt p4 = new Pt(0,9);
 
-    LineSegmentLineSegmentIntersection.lineSegmentLineSegmentIntersection(p1, p2, p3, p4);
+    Pt[] pts = LineSegmentLineSegmentIntersection.lineSegmentLineSegmentIntersection(p1, p2, p3, p4);
+    assertThat(pts[0].equals(p1)).isTrue();
+    assertThat(pts[1].equals(p2)).isTrue();
   }
   @Test
   public void testNoIntersection() {
-    LineSegmentLineSegmentIntersection.Pt p1 = new LineSegmentLineSegmentIntersection.Pt(0,0);
-    LineSegmentLineSegmentIntersection.Pt p2 = new LineSegmentLineSegmentIntersection.Pt(0,6);
-    LineSegmentLineSegmentIntersection.Pt p3 = new LineSegmentLineSegmentIntersection.Pt(1,0);
-    LineSegmentLineSegmentIntersection.Pt p4 = new LineSegmentLineSegmentIntersection.Pt(2,9);
+    Pt p1 = new Pt(0,0);
+    Pt p2 = new Pt(0,6);
+    Pt p3 = new Pt(1,0);
+    Pt p4 = new Pt(2,9);
 
-    LineSegmentLineSegmentIntersection.lineSegmentLineSegmentIntersection(p1, p2, p3, p4);
+    Pt[] pts = LineSegmentLineSegmentIntersection.lineSegmentLineSegmentIntersection(p1, p2, p3, p4);
+    assertThat(pts).isEmpty();
   }
 
   @Test
   public void testAllEqual() {
-    LineSegmentLineSegmentIntersection.Pt p1 = new LineSegmentLineSegmentIntersection.Pt(0,0);
-    LineSegmentLineSegmentIntersection.Pt p2 = new LineSegmentLineSegmentIntersection.Pt(0,0);
-    LineSegmentLineSegmentIntersection.Pt p3 = new LineSegmentLineSegmentIntersection.Pt(0,0);
-    LineSegmentLineSegmentIntersection.Pt p4 = new LineSegmentLineSegmentIntersection.Pt(0,0);
+    Pt p1 = new Pt(0,0);
+    Pt p2 = new Pt(0,0);
+    Pt p3 = new Pt(0,0);
+    Pt p4 = new Pt(0,0);
 
-    LineSegmentLineSegmentIntersection.lineSegmentLineSegmentIntersection(p1, p2, p3, p4);
+    Pt[] pts = LineSegmentLineSegmentIntersection.lineSegmentLineSegmentIntersection(p1, p2, p3, p4);
+    assertThat(pts[0].equals(p1)).isTrue();
   }
 
   @Test
   public void testContinuousLineConnectedInOnePoint() {
-    LineSegmentLineSegmentIntersection.Pt p1 = new LineSegmentLineSegmentIntersection.Pt(0,0);
-    LineSegmentLineSegmentIntersection.Pt p2 = new LineSegmentLineSegmentIntersection.Pt(0,10);
-    LineSegmentLineSegmentIntersection.Pt p3 = new LineSegmentLineSegmentIntersection.Pt(0,10);
-    LineSegmentLineSegmentIntersection.Pt p4 = new LineSegmentLineSegmentIntersection.Pt(0,20);
+    Pt p1 = new Pt(0,0);
+    Pt p2 = new Pt(0,10);
+    Pt p3 = new Pt(0,10);
+    Pt p4 = new Pt(0,20);
 
-    LineSegmentLineSegmentIntersection.lineSegmentLineSegmentIntersection(p1, p2, p3, p4);
+    Pt[] pts = LineSegmentLineSegmentIntersection.lineSegmentLineSegmentIntersection(p1, p2, p3, p4);
+    assertThat(pts[0].equals(p2)).isTrue();
   }
 
   @After
